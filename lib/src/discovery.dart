@@ -288,17 +288,23 @@ class DiscoveredDevice {
   String? uuid;
   String? location;
 
-  Future<Device?> getRealDevice() async {
-    HttpClientResponse response;
+  Future<Device?> getRealDevice() async 
+  {
+    //HttpClientResponse response;
+    var response;
+    try 
+    {
+      // var request = await UpnpCommon.httpClient.getUrl(Uri.parse(location!)).timeout(
+      //   const Duration(seconds: 5),
+      //   onTimeout: (() => null) as FutureOr<HttpClientRequest> Function()?
+      // );
 
-    try {
-      var request = await UpnpCommon.httpClient.getUrl(Uri.parse(location!)).timeout(
-        const Duration(seconds: 5),
-        onTimeout: (() => null) as FutureOr<HttpClientRequest> Function()?
-      );
+      // response = await request.close();
 
-      response = await request.close();
-    } catch (_) {
+      response = await Dio().getUri(Uri.parse(location!)).timeout(Duration(seconds: 5));
+      
+    } 
+    catch (_) {
       return null;
     }
 
